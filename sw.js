@@ -4,8 +4,6 @@ const CACHE_NAME = 'icao-nato-v1.0.0';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/style.css',
-  '/script.js',
   '/manifest.json',
   '/assets/icons/icon-192x192.png',
   '/assets/icons/icon-512x512.png',
