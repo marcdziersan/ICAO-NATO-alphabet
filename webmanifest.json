@@ -2,12 +2,12 @@
   "name": "ICAO/NATO/IMO Spelling Alphabet",
   "short_name": "Funkalphabet",
   "description": "Interactive learning platform for the International Radiotelephony Spelling Alphabet - ICAO, NATO, IMO standard",
-  "start_url": "/",
+  "start_url": "/ICAO-NATO-alphabet/",
   "display": "standalone",
   "background_color": "#2c3e50",
   "theme_color": "#3498db",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "/ICAO-NATO-alphabet/",
   "categories": ["education", "reference", "communication", "aviation", "maritime"],
   "lang": "en",
   "dir": "ltr",
@@ -48,7 +48,7 @@
       "name": "Learn Letters",
       "short_name": "Letters",
       "description": "Jump directly to the alphabet section",
-      "url": "/#alphabet",
+      "url": "/ICAO-NATO-alphabet/#alphabet",
       "icons": [
         {
           "src": "assets/icons/favicon-32x32.png",
@@ -61,7 +61,7 @@
       "name": "Learn Numbers",
       "short_name": "Numbers",
       "description": "Jump directly to the numbers section",
-      "url": "/#numbers",
+      "url": "/ICAO-NATO-alphabet/#numbers",
       "icons": [
         {
           "src": "assets/icons/favicon-32x32.png",
@@ -74,7 +74,7 @@
       "name": "About ICAO/NATO/IMO",
       "short_name": "About",
       "description": "Learn about the organizations",
-      "url": "/#about",
+      "url": "/ICAO-NATO-alphabet/#about",
       "icons": [
         {
           "src": "assets/icons/favicon-32x32.png",
