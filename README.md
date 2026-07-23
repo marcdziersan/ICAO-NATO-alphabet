@@ -8,7 +8,6 @@
 - [Overview](#-overview)
 - [Key Features](#-key-features)
 - [The Three Organizations](#-the-three-organizations)
-- [Demo Screenshots](#-demo-screenshots)
 - [Technologies Used](#-technologies-used)
 - [Project Structure](#-project-structure)
 - [API Reference](#-api-reference)
