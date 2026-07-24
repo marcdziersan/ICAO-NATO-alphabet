@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Offline - ICAO/NATO/IMO Alphabet</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Segoe UI', Roboto, sans-serif;
       background: linear-gradient(135deg, #2c3e50, #3498db);
@@ -18,43 +22,54 @@
       padding: 20px;
     }
     .offline-container {
-      max-width: 520px;
-      background: rgba(255,255,255,0.12);
+      max-width: 500px;
+      background: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
       padding: 40px;
       border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     }
-    .offline-icon { font-size: 4rem; margin-bottom: 20px; }
-    h1 { font-size: 2rem; margin-bottom: 10px; }
-    p { opacity: 0.95; line-height: 1.6; margin-bottom: 16px; }
-    .actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .offline-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    p {
+      opacity: 0.9;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
     .retry-btn {
       background: white;
       color: #2c3e50;
       border: none;
-      padding: 12px 24px;
+      padding: 12px 30px;
       border-radius: 50px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: transform 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
     }
-    .retry-btn:hover { transform: scale(1.05); }
+    .retry-btn:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
   <div class="offline-container">
     <div class="offline-icon">📡</div>
-    <h1>You are offline</h1>
-    <p>The ICAO/NATO/IMO spelling alphabet app could not reach the network, but the main experience is still available locally.</p>
-    <div class="actions">
-      <a class="retry-btn" href="./index.html">Open the app</a>
-      <button class="retry-btn" onclick="location.reload()">Retry connection</button>
-    </div>
+    <h1>You're Offline</h1>
+    <p>
+      The ICAO/NATO/IMO Spelling Alphabet app needs an internet connection
+      to load the latest data and speech synthesis features.
+    </p>
+    <p style="font-size: 0.9rem; opacity: 0.7;">
+      Please check your connection and try again.
+    </p>
+    <button class="retry-btn" onclick="location.reload()">⟳ Retry Connection</button>
   </div>
 </body>
 </html>

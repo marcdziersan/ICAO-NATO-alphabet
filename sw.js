@@ -1,57 +1,88 @@
-const CACHE_NAME = 'icao-nato-v1.1.0';
+// sw.js - Service Worker for ICAO/NATO/IMO Spelling Alphabet
+
+const CACHE_NAME = 'icao-nato-v1.0.0';
 const urlsToCache = [
-  './',
-  './index.html',
-  './offline.html',
-  './assets/css/styles.css',
-  './assets/js/app.js',
-  './assets/icons/site.webmanifest',
-  './assets/icons/android-chrome-192x192.png',
-  './assets/icons/android-chrome-512x512.png',
-  './assets/icons/apple-touch-icon.png',
-  './assets/icons/favicon-16x16.png',
-  './assets/icons/favicon-32x32.png',
-  './assets/icons/favicon.ico'
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/assets/icons/icon-192x192.png',
+  '/assets/icons/icon-512x512.png',
+  'https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap'
 ];
 
+// Install event - cache core assets
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+      .then(() => self.skipWaiting())
   );
 });
 
+// Activate event - clean old caches
 self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then(cacheNames => Promise.all(
-      cacheNames.filter(cacheName => cacheName !== CACHE_NAME).map(cacheName => caches.delete(cacheName))
-    )).then(() => self.clients.claim())
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
   );
 });
 
+// Fetch event - serve from cache if available
 self.addEventListener('fetch', event => {
-  if (event.request.mode === 'navigate') {
-    event.respondWith(fetch(event.request).catch(() => caches.match('./offline.html')));
-    return;
-  }
-
   event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then(cached => {
-      if (cached) {
-        return cached;
-      }
-
-      return fetch(event.request).then(response => {
-        if (!response || response.status !== 200 || response.type !== 'basic') {
+    caches.match(event.request)
+      .then(response => {
+        // Cache hit - return response
+        if (response) {
           return response;
         }
 
-        const responseToCache = response.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, responseToCache);
-        });
+        // Clone the request because it's a one-time use
+        const fetchRequest = event.request.clone();
 
-        return response;
-      }).catch(() => caches.match('./offline.html'));
-    })
+        return fetch(fetchRequest).then(
+          response => {
+            // Check if we received a valid response
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Clone the response because it's a one-time use
+            const responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                // Don't cache external resources
+                if (event.request.url.startsWith(self.location.origin)) {
+                  cache.put(event.request, responseToCache);
+                }
+              });
+
+            return response;
+          }
+        );
+      })
   );
+});
+
+// Handle offline fallback
+self.addEventListener('fetch', event => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => {
+        return caches.match('/offline.html');
+      })
+    );
+  }
 });
